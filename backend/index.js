@@ -2,11 +2,13 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import Log from "./models/Log.js";
+import dotenv from "dotenv";
 import { simulateBruteForce } from "./sim/attackSimulator.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+dotenv.config();
 
 
 //Brute force attack
@@ -68,7 +70,7 @@ app.post("/api/logs/analyze", (req, res) => {
 });
 
 // the connection to mongoDB
-mongoose.connect("mongodb+srv://matteprov_db_user:RiUoeM6WdN9ZVCYn@cluster0.vy9yeff.mongodb.net/?appName=Cluster0")
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log("connected to MongoDB"))
     .catch(err => console.error("MongoDB error", err));
 
