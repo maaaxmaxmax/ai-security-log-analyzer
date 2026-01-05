@@ -1,15 +1,25 @@
 import AttackControls from "./components/AttackControls.jsx";
 import LogList from "./components/LogList.jsx";
 import "./App.css";
+import LogChart from "./components/LogChart.jsx";
+import Heatmap from "./components/Heatmap.jsx";
+import { Container, Typography } from "@mui/material";
 
 function App() {
   return (
-    <div className="app-container">
-      <h1>AI Security Log Analyzer</h1>
+        <Container maxWidth="md" sx={{ py: 4 }}>
+            <Typography 
+                variant="h4" 
+                sx={{ color: "#fff", mb: 4, fontWeight: "bold" }}
+            >
+                AI Security Log Analyzer
+            </Typography>
 
-      <AttackControls />
-      <LogList />
-    </div>
+            <AttackControls />
+            <LogList />
+            <LogChart />
+            <Heatmap />
+        </Container>
   );
 }
 
