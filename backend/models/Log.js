@@ -12,7 +12,8 @@ const LogSchema = new mongoose.Schema({
   action: {
     type: String,
     required: true,
-    enum: ["LOGIN_SUCCESS", "LOGIN_FAIL", "SCAN", "UNKNOWN", "ADMIN_ACTION"],
+    enum: ["LOGIN_SUCCESS", "LOGIN_FAIL", "SCAN", "PORT_SCAN", "NIGHT_LOGIN", "BRUTEFORCE", "LOGIN_FAIL_BURST", "LOGIN_SUCCESS_NIGHT"],
+    required: true
   },
   username: {
     type: String,
