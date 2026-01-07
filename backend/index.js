@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import Log from "./models/Log.js";
 import dotenv from "dotenv";
+import { analyzeLogs } from "./services/ai.js";
 import { simulateBruteForce, simulateNightTime, simulateIPScan, simulateFailedBurst } from "./sim/attackSimulator.js";
 
 
@@ -64,6 +65,54 @@ app.post("/api/sim/failedburst", async (req, res) => {
     } catch (err) {
         console.error("Burst attack error", err);
         res.status(500).json({ error: "Failed burst simulation failed"});
+    }
+});
+
+//AI analysis placeholder
+app.post("/api/logs/analyze", async (req, res) => {
+    try {
+        const logs = await Log.find().sort({timestamp: -1 }).limit(10);
+        const result = await analyzeLogs(logs);
+
+        res.json(result);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({error: "AI analysis failed"});
+    }
+});
+
+
+// get AI analysis for each attack
+app.post("/api/analyze/:type", async (req, res) => {
+    const type = req.params.type;
+
+    const queryMap = {
+        bruteforce: { action: "LOGIN_FAIL" },
+        burst: { action: "LOGIN_FAIL_BURST" },
+        night: { action: "LOGIN_SUCCESS" },
+        portscan: { action: "PORT_SCAN" }
+    };
+
+    const filter = queryMap[type];
+    if (!filter) return res.status(400).json({error: "unknown attack type"});
+
+    try {
+        //get the last 20 logs
+        const logs = await Log.find(filter).sort({ timestamp: -1 }).limit(20);
+
+        if (logs.length === 0) {
+            return res.json({
+                message: "No logs found for this attack type"
+            });
+        }
+
+        //run the ai analysis
+        const aiReport = await analyzeLogs(logs);
+
+        res.json(aiReport);
+    } catch (err) {
+        console.error("Analysis error:", err);
+        res.status(500).json({error: "AI analysis failed"});
     }
 });
 
@@ -135,15 +184,6 @@ app.get("/api/logs/suspicious", (req, res) => {
     res.json([]);
 });
 
-
-
-//AI analysis placeholder
-app.post("/api/logs/analyze", (req, res) => {
-    res.json({
-        messagge: "AI analysis is not yet implemented",
-        input: req.body
-    });
-});
 
 // the connection to mongoDB
 mongoose.connect(process.env.MONGODB_URI)

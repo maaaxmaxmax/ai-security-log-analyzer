@@ -5,13 +5,23 @@ export default function LogList() {
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        async function loadLogs() {
+    async function loadLogs() {
+        try {
             const res = await fetch("http://localhost:3001/api/logs");
             const data = await res.json();
             setLogs(data);
+        } catch (err) {
+            console.error("Failed to fetch logs:", err);
         }
-        loadLogs();
-    }, []);
+    }
+
+    loadLogs(); // initial load
+
+    const interval = setInterval(loadLogs, 2000); // fetch every 2 seconds
+
+    return () => clearInterval(interval); // cleanup
+}, []);
+
 
     // Helper: return only latest 5 of each category
     function getLatest(actionType) {
