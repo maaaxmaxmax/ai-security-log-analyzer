@@ -1,63 +1,50 @@
-🔐 Overview
+🔐 AI Security Log Analyzer
 
-AI Security Log Analyzer is a full-stack application designed to simulate cyber-attacks, store security logs, and analyze them using AI.
-The system provides real-time monitoring, attack simulation, log visualization, and automated AI-generated risk assessments.
+An interactive dashboard that simulates cyberattacks, stores security logs, analyzes them with AI, and visualizes activity in real time.
+Designed as a portfolio project to demonstrate full-stack development, cybersecurity concepts, and AI integration.
 
-It is built as a learning and portfolio project to demonstrate practical full-stack development skills, including:
+📌 What the Application Does
+🔥 Attack Simulator
 
-Backend API architecture (Node.js + Express)
+The system lets you generate different types of simulated cyberattacks with one click:
 
-Database modeling & log storage (MongoDB)
+Brute Force Login Attempts
 
-Frontend UI/UX design (React + Material UI)
+Night-Time Login Events
 
-Real-time data visualization (Recharts)
+Port Scanning Activity
 
-AI-powered log analysis (OpenAI GPT-5 Mini)
+Burst Login Failures
 
-🚀 Features
-✅ Attack Simulator
-
-Generate fake cyber-attacks with one click:
-
-Brute-force login attempts
-
-Night-time suspicious logins
-
-Port scanning activity
-
-Burst login failures
-
-Each simulated attack is automatically stored in MongoDB.
+Each attack generates multiple log entries that are automatically saved in MongoDB.
 
 🤖 AI-Powered Log Analysis
 
-Select any attack type and send the latest logs to an AI model.
-The system returns:
+The application uses the OpenAI API (GPT-5-mini) to analyze log batches and return:
 
-Risk Score (0–100)
+Risk score
 
-Summary of detected patterns
+Attack summary
 
 Risk factors
 
 Recommended actions
 
-This helps demonstrate how AI can assist with log interpretation and threat detection.
+This demonstrates how AI can be used for automated threat assessment in modern security monitoring.
 
-📊 Dashboard & Real-Time Monitoring
+📊 Real-Time Monitoring Dashboard
 
-The frontend displays:
+The React dashboard provides:
 
-Recent logs grouped by attack category
+A real-time threat graph updating every second
 
-Real-time threat activity graph
+A Security Log Overview dynamically refreshed
 
-AI analysis panel
+A dedicated AI Analysis panel
 
-Clean, modern dashboard layout
+A clean UI built with Material UI and responsive layouting
 
-🗃️ Tech Stack
+🧰 Tech Stack
 Backend
 
 Node.js
@@ -68,6 +55,8 @@ MongoDB + Mongoose
 
 OpenAI API
 
+Dotenv
+
 Frontend
 
 React (Vite)
@@ -76,9 +65,9 @@ Material UI
 
 Recharts
 
-Custom dashboard layout
+Modular component-based architecture
 
-🛠️ Installation
+🚀 Installation & Setup
 1. Clone the repository
 git clone https://github.com/maaaxmaxmax/ai-security-log-analyzer.git
 
@@ -86,23 +75,52 @@ git clone https://github.com/maaaxmaxmax/ai-security-log-analyzer.git
 cd backend
 npm install
 
-3. Add required environment variables
+3. Create .env in the backend folder
+MONGODB_URI=your_mongodb_connection_string
+OPENAI_API_KEY=your_openai_api_key
 
-Create .env inside /backend:
-
-MONGODB_URI=your_mongo_connection_string
-OPENAI_API_KEY=your_api_key
-
-4. Start backend
+4. Start the backend
 npm start
 
-5. Install frontend dependencies
+5. Set up the frontend
 cd ../frontend
 npm install
 npm run dev
 
 
-The app is now running locally.
-Frontend defaults to: http://localhost:5173
+Frontend available at: http://localhost:5173
+Backend available at: http://localhost:3001
 
-Backend defaults to: http://localhost:3001
+🎯 Project Purpose
+
+This project was developed to demonstrate:
+
+Full-stack application design
+
+Real-time data handling
+
+Secure logging practices
+
+AI-driven threat analysis
+
+Dashboard UX for cybersecurity monitoring
+
+It can be used for learning, portfolio presentation, or as a prototype for future expansion.
+
+📈 Future Improvements
+
+Potential enhancements include:
+
+User authentication and roles
+
+Email or push notifications on detected threats
+
+Import of real server logs (SSH, Apache, Windows Event Logs)
+
+More detailed threat models
+
+Exporting analysis reports
+
+Dark/light theme toggle
+
+Containerization (Docker)
